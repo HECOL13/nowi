@@ -38,17 +38,18 @@ cursor:pointer;
 
 /* TOP */
 .top{
-padding-top:32px;
+padding-top:34px;
 text-align:center;
 }
 
 .top-title{
 font-size:17px;
 color:#222;
+margin-bottom:22px;
 }
 
 .check{
-margin:18px auto 0;
+margin:0 auto 22px;
 width:72px;
 height:72px;
 background:#1f8f3e;
@@ -67,13 +68,12 @@ fill:none;
 }
 
 .success{
-margin-top:18px;
 font-size:26px;
 font-weight:500;
+margin-bottom:14px;
 }
 
 .price{
-margin-top:8px;
 font-size:46px;
 font-weight:500;
 }
@@ -93,44 +93,51 @@ z-index:5;
 width:100%;
 background:#fff;
 border-radius:28px 28px 0 0;
-padding:24px 22px 28px;
+padding:26px 22px 30px;
 text-align:center;
 }
 
 .card-title{
 text-align:left;
 font-size:18px;
-margin-bottom:18px;
+margin-bottom:26px;
 }
 
 #qrcode{
 width:220px;
-margin:0 auto 14px;
+margin:0 auto 22px;
 }
 
 .gray{
 color:#9a9a9a;
 font-size:14px;
+margin-bottom:26px;
 }
 
 .bus{
-margin-top:16px;
 font-size:20px;
 font-weight:500;
+margin-bottom:14px;
 }
 
 .date{
-margin-top:8px;
 font-size:15px;
 color:#555;
+margin-bottom:30px;
 }
 
 .bottom{
-margin-top:26px;
 display:flex;
 justify-content:space-around;
-font-size:14px;
+font-size:13px;
 color:#777;
+}
+
+.bottom-item{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:6px;
 }
 
 /* SETTINGS PANEL */
@@ -143,9 +150,7 @@ padding:20px;
 display:none;
 }
 
-.panel h2{
-margin-top:0;
-}
+.panel h2{margin-top:0}
 
 input{
 width:100%;
@@ -169,7 +174,7 @@ margin-top:10px;
 
 <body>
 
-<div class="settings" onclick="openSettings()">⚙️</div>
+<div class="settings" id="settingsBtn" onclick="openSettings()">⚙️</div>
 
 <div class="top">
 <div class="top-title">Avtobys. Оплата проезда по QR</div>
@@ -197,8 +202,23 @@ margin-top:10px;
 <div class="date" id="date">01 марта 2026 17:22</div>
 
 <div class="bottom">
-<div>🧾<br>Квитанция</div>
-<div>🔗<br>Поделиться</div>
+<div class="bottom-item">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="2">
+<path d="M6 2h9l3 3v17H6z"/>
+<path d="M9 9h6M9 13h6"/>
+</svg>
+<div>Квитанция</div>
+</div>
+
+<div class="bottom-item">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="2">
+<circle cx="18" cy="5" r="3"/>
+<circle cx="6" cy="12" r="3"/>
+<circle cx="18" cy="19" r="3"/>
+<path d="M8.5 13.5L15.5 17.5M15.5 6.5L8.5 10.5"/>
+</svg>
+<div>Поделиться</div>
+</div>
 </div>
 
 </div>
@@ -207,7 +227,7 @@ margin-top:10px;
 <div class="panel" id="panel">
 <h2>Настройки</h2>
 
-<input id="busInput" placeholder="Код автобуса" value="704BD04">
+<input id="busInput" value="704BD04">
 <input type="date" id="dateInput">
 <input type="time" id="timeInput">
 
@@ -217,36 +237,38 @@ margin-top:10px;
 
 <script>
 function openSettings(){
-document.getElementById('panel').style.display='block';
+panel.style.display='block';
 }
 
 function apply(){
-let bus=busInput.value;
-let d=dateInput.value;
-let t=timeInput.value;
+bus.textContent=busInput.value;
 
-bus && (document.getElementById('bus').innerText=bus);
-
-if(d && t){
-let dt=new Date(d+"T"+t);
+if(dateInput.value && timeInput.value){
+let d=new Date(dateInput.value+"T"+timeInput.value);
 let m=["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
-document.getElementById('date').innerText=
-dt.getDate()+" "+m[dt.getMonth()]+" "+dt.getFullYear()+" "+t;
+date.textContent=d.getDate()+" "+m[d.getMonth()]+" "+d.getFullYear()+" "+timeInput.value;
 }
 
-makeQR(bus+d+t);
+makeQR(busInput.value+dateInput.value+timeInput.value);
 panel.style.display='none';
 }
 
-function makeQR(text){
+function makeQR(t){
 qrcode.innerHTML="";
-QRCode.toCanvas(text,{width:220},(_,c)=>qrcode.appendChild(c));
+QRCode.toCanvas(t,{width:220},(_,c)=>qrcode.appendChild(c));
 }
 
 function goFullscreen(){
 document.documentElement.requestFullscreen();
+document.getElementById("settingsBtn").style.display="none";
 panel.style.display='none';
 }
+
+document.addEventListener("fullscreenchange",()=>{
+if(!document.fullscreenElement){
+document.getElementById("settingsBtn").style.display="flex";
+}
+});
 
 makeQR("704BD04");
 </script>
