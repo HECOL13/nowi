@@ -2,226 +2,307 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Avtobys</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Avtobys QR</title>
 
 <style>
-*{box-sizing:border-box}
-body{
-margin:0;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-background:#eee;
-color:#000;
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* фон приложения */
-.app{
-position:fixed;
-inset:0;
-background:#f4f4f4;
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #e5e5e5;
+  overflow: hidden;
 }
 
-/* затемнение */
-.app::after{
-content:"";
-position:absolute;
-inset:0;
-background:rgba(0,0,0,.25);
+/* ===== ФОН ===== */
+.background {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(#cfcfcf, #bdbdbd);
+  filter: blur(6px) brightness(0.9);
+  z-index: 1;
 }
 
-/* верхний контент */
-.top{
-position:relative;
-z-index:1;
-text-align:center;
-padding-top:40px;
-}
-.top-title{
-font-size:15px;
-color:#333;
-}
-.check{
-margin:18px auto 14px;
-width:64px;
-height:64px;
-border-radius:50%;
-background:#1aa34a;
-display:flex;
-align-items:center;
-justify-content:center;
-}
-.check svg{
-width:34px;
-height:24px;
-fill:none;
-stroke:#fff;
-stroke-width:4;
-stroke-linecap:round;
-stroke-linejoin:round;
-}
-.success{
-font-size:22px;
-font-weight:500;
-margin-bottom:6px;
-}
-.price{
-font-size:42px;
-font-weight:500;
+/* ===== ВЕРХ ===== */
+.top {
+  position: relative;
+  z-index: 2;
+  padding: 20px 16px 10px;
+  text-align: center;
 }
 
-/* карточка */
-.card{
-position:fixed;
-left:0;right:0;bottom:0;
-background:#fff;
-border-radius:26px 26px 0 0;
-padding:22px 20px 28px;
-box-shadow:0 -8px 25px rgba(0,0,0,.35);
-}
-.card-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-font-size:17px;
-margin-bottom:14px;
-}
-.card-header span{
-font-size:22px;
-color:#555;
-}
-canvas{
-display:block;
-margin:0 auto 14px;
-width:220px;
-height:220px;
-}
-.hint{
-text-align:center;
-color:#9a9a9a;
-font-size:14px;
-}
-.code{
-text-align:center;
-margin-top:14px;
-font-size:18px;
-letter-spacing:2px;
-}
-.date{
-text-align:center;
-margin-top:6px;
-font-size:14px;
-color:#555;
-}
-.bottom{
-display:flex;
-justify-content:space-around;
-margin-top:26px;
-font-size:14px;
-color:#555;
+.top-title {
+  font-size: 15px;
+  color: #3a3a3a;
 }
 
-/* панель управления */
-.controls{
-position:fixed;
-top:10px;
-left:10px;
-right:10px;
-background:#fff;
-padding:10px;
-border-radius:10px;
-box-shadow:0 5px 20px rgba(0,0,0,.25);
-z-index:10;
-}
-.controls label{
-font-size:13px;
-color:#555;
-}
-.controls input{
-width:100%;
-padding:8px;
-margin:4px 0 8px;
-font-size:14px;
-}
-.controls button{
-width:100%;
-padding:10px;
-font-size:15px;
-border:none;
-border-radius:8px;
-background:#000;
-color:#fff;
+.check {
+  margin: 18px auto 12px;
+  width: 64px;
+  height: 64px;
+  background: #1fa74a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* скрытие */
-.hide{display:none}
+.check svg {
+  width: 34px;
+  height: 26px;
+  stroke: #fff;
+  stroke-width: 4;
+  fill: none;
+}
+
+.success {
+  font-size: 22px;
+  font-weight: 500;
+  margin-top: 6px;
+}
+
+.price {
+  font-size: 36px;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+/* ===== КАРТОЧКА ===== */
+.card {
+  position: relative;
+  z-index: 3;
+  background: #fff;
+  margin: 10px 12px 0;
+  border-radius: 16px;
+  padding: 18px 16px 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.close {
+  font-size: 24px;
+  line-height: 1;
+}
+
+/* ===== QR ===== */
+.qr {
+  margin: 20px auto 12px;
+  width: 220px;
+  height: 220px;
+}
+
+.hint {
+  text-align: center;
+  color: #9b9b9b;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.bus {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 16px;
+  font-weight: 500;
+}
+
+.datetime {
+  text-align: center;
+  font-size: 15px;
+  margin-top: 6px;
+  color: #333;
+}
+
+/* ===== НИЗ ===== */
+.bottom {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+}
+
+.bottom-item {
+  text-align: center;
+  font-size: 13px;
+  color: #333;
+}
+
+.bottom-item svg {
+  width: 26px;
+  height: 26px;
+  margin-bottom: 6px;
+}
+
+/* ===== КНОПКА НАСТРОЕК ===== */
+.settings-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+/* ===== НАСТРОЙКИ ===== */
+.settings {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 20;
+  padding: 20px;
+  display: none;
+}
+
+.settings h2 {
+  margin-top: 0;
+}
+
+.settings label {
+  display: block;
+  margin-top: 14px;
+  font-size: 14px;
+}
+
+.settings input {
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.settings button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+}
 </style>
 </head>
 
 <body>
 
-<div class="controls" id="controls">
-<label>Код автобуса</label>
-<input placeholder="704BD04" oninput="setCode(this.value)">
-<label>Дата и время</label>
-<input placeholder="01 марта 2026 17:22" oninput="setDate(this.value)">
-<button onclick="goFull()">Полноэкранный режим</button>
-</div>
+<div class="background"></div>
 
-<div class="app">
+<div class="settings-btn" onclick="openSettings()">⚙️</div>
 
 <div class="top">
-<div class="top-title">Avtobys. Оплата проезда по QR</div>
-
-<div class="check">
-<svg viewBox="0 0 24 16">
-<polyline points="2,9 9,14 22,2"></polyline>
-</svg>
-</div>
-
-<div class="success">Ваш платеж принят.</div>
-<div class="price">80 ₸</div>
-</div>
-
+  <div class="top-title">Avtobys. Оплата проезда по QR</div>
+  <div class="check">
+    <svg viewBox="0 0 24 18">
+      <polyline points="2,10 9,16 22,2"></polyline>
+    </svg>
+  </div>
+  <div class="success">Ваш платёж принят.</div>
+  <div class="price">80 ₸</div>
 </div>
 
 <div class="card">
-<div class="card-header">
-<div>Avtobys. Оплата проезда по QR</div>
-<span>×</span>
+  <div class="card-header">
+    <div class="card-title">Avtobys. Оплата проезда по QR</div>
+    <div class="close">×</div>
+  </div>
+
+  <canvas id="qr" class="qr"></canvas>
+
+  <div class="hint">Покажите QR-код контролеру</div>
+  <div class="bus" id="busText">704BD04</div>
+  <div class="datetime" id="dateText">01 марта 2026 17:22</div>
+
+  <div class="bottom">
+    <div class="bottom-item">
+      <svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/></svg>
+      Квитанция
+    </div>
+    <div class="bottom-item">
+      <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.5" y1="10.5" x2="15.5" y2="6.5"/><line x1="8.5" y1="13.5" x2="15.5" y2="17.5"/></svg>
+      Поделиться
+    </div>
+  </div>
 </div>
 
-<canvas id="qr"></canvas>
+<div class="settings" id="settings">
+  <h2>Настройка</h2>
 
-<div class="hint">Покажите QR-код контролеру</div>
-<div class="code" id="bus">704BD04</div>
-<div class="date" id="date">01 марта 2026 17:22</div>
+  <label>Код автобуса</label>
+  <input id="busInput" value="704BD04">
 
-<div class="bottom">
-<div>🧾<br>Квитанция</div>
-<div>🔗<br>Поделиться</div>
+  <label>Дата</label>
+  <input type="date" id="dateInput">
+
+  <label>Время</label>
+  <input type="time" id="timeInput">
+
+  <button onclick="apply()">Показать билет</button>
 </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/qrious/dist/qrious.min.js"></script>
 <script>
-let qr=new QRious({
-element:document.getElementById("qr"),
-value:"704BD04",
-size:220,
-level:"H"
-});
+function openSettings() {
+  document.getElementById('settings').style.display = 'block';
+}
 
-function setCode(v){
-document.getElementById("bus").innerText=v;
-qr.set({value:v});
+function apply() {
+  const bus = busInput.value;
+  const d = dateInput.value;
+  const t = timeInput.value;
+
+  busText.textContent = bus;
+
+  if (d && t) {
+    const date = new Date(d + 'T' + t);
+    dateText.textContent = date.toLocaleDateString('ru-RU', {
+      day: '2-digit', month: 'long', year: 'numeric'
+    }) + ' ' + t;
+  }
+
+  document.getElementById('settings').style.display = 'none';
+
+  if (document.documentElement.requestFullscreen) {
+    document.documentElement.requestFullscreen();
+  }
+
+  drawQR(bus + ' ' + d + ' ' + t);
 }
-function setDate(v){
-document.getElementById("date").innerText=v;
+
+function drawQR(text) {
+  const c = document.getElementById('qr');
+  const ctx = c.getContext('2d');
+  c.width = c.height = 220;
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0,0,220,220);
+  ctx.fillStyle = '#000';
+
+  for (let y=0;y<33;y++) {
+    for (let x=0;x<33;x++) {
+      if (Math.random() > 0.5) {
+        ctx.fillRect(x*6+10,y*6+10,4,4);
+      }
+    }
+  }
 }
-function goFull(){
-document.getElementById("controls").classList.add("hide");
-document.documentElement.requestFullscreen();
-}
+
+drawQR('704BD04');
 </script>
 
 </body>
